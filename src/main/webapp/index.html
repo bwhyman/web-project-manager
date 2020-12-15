@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课设部署系统</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/material-design-icons/3.0.2/iconfont/material-icons.css"
+          rel="stylesheet">
+    <style>
+        .container {
+            background: indigo;
+            min-height: 100vh;
+        }
+
+        i.sidebar {
+            font-size: 2.0rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="height: 100%; padding-top: 56px;padding-bottom: 56px">
+        <div class="col-sm-12 col-md-2">
+            <div class="card">
+                <div class="card-body" style="text-align: center">
+                    <div class="nav nav-fill flex-md-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill"
+                           href="#v-pills-home"
+                           role="tab" aria-controls="v-pills-home" aria-selected="true"><i
+                                class="material-icons sidebar">lightbulb_outline</i></a>
+                        <a class="nav-link nav-item" id="v-pills-profile-tab" data-toggle="pill"
+                           href="#v-pills-profile"
+                           role="tab" aria-controls="v-pills-profile" aria-selected="false"><i
+                                class="material-icons sidebar">person</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active row" id="v-pills-home" role="tabpanel"
+                             aria-labelledby="v-pills-home-tab">home
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                             aria-labelledby="v-pills-profile-tab">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="message">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+<script src="resources/uploadtable.js"></script>
+<script>
+    $(function () {
+        uploadTable();
+        $.ajax({
+            url : "manager/profile",
+            method: "get",
+            dataType: "html",
+            beforeSend: () => {
+                $("#v-pills-profile").html("<img src='resources/circle-loading.gif' style='display: block;width: 100px;margin: auto;'>")
+            },
+            success: resp => {
+                $("#v-pills-profile").html(resp);
+            }
+        })
+    })
+</script>
+
+</body>
+</html>
