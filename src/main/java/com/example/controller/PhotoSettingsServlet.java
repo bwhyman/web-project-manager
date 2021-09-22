@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
 
-@WebServlet("/manager/photosettings")
+@WebServlet("/managerx/photosettings")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5)
 public class PhotoSettingsServlet extends HttpServlet {
     @Override

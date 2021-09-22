@@ -7,7 +7,7 @@
         <i class="material-icons">extension</i>
     </a>
 </p>
-<c:set var="path" value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}/"></c:set>
+<c:set var="path" value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}/" />
 <div class="collapse show" id="project">
     <div class="alert alert-primary" role="alert">
         <span style="vertical-align: middle"><i class="material-icons info-link" id="logout" style="color: orangered">cloud_off</i></span>
@@ -25,7 +25,10 @@
                     <button type="button" class="btn btn-primary" id="submit-repo">提交</button>
                 </div>
             </div>
-            <p>提交项目war包后，5-10s服务器自动完成部署。</p>
+            <p>提交项目war包后，5-10s服务器自动完成部署。<br>
+                <span class="text-danger">
+                页面中的"/"是相对于服务器为根的请求，课设项目自动以学号为项目名部署在服务器。
+                因此，请求必须是相对于自己项目为根的请求。参考以下首页地址的前缀</span></p>
             <div class="input-group mb-3">
                 <div class="custom-file">
                     <input id="war-file" type="file" class="custom-file-input">
@@ -102,7 +105,7 @@
 
     $("#submit-repo").click(() => {
         $.ajax({
-            url: "manager/submitrepo",
+            url: "managerx/submitrepo",
             method: "post",
             data: {"repositoryurl": $("input[name=repositoryurl]").val()},
             success: resp => {
@@ -118,7 +121,7 @@
         data.append('file', file);
         data.append("index", $("input[name=index]").val());
         $.ajax({
-            url: "manager/uploadwar",
+            url: "managerx/uploadwar",
             method: "post",
             data: data,
             processData: false,
@@ -148,7 +151,7 @@
 
     $("#submit-self").click(() => {
         $.ajax({
-            url: "manager/submitself",
+            url: "managerx/submitself",
             method: "post",
             data: {"selfaddress": $("input[name=self-address]").val()},
             success: resp => {
@@ -176,7 +179,7 @@
     <div class="card card-body">
         <div id="show-photo">
             <c:if test="${sessionScope.user.photo != null && sessionScope.user.photo.length() > 10}">
-                <img src="data:image/png;base64,${sessionScope.user.photo}" alt=""
+                <img src="data:image/png;base64,${sessionScope.user.photo}" alt="photo"
                      style="width: 160px;height: 160px;border: 1px solid aquamarine; border-radius: 10px">
             </c:if>
             <c:if test="${sessionScope.user.photo == null || sessionScope.user.photo.length() < 10}">
@@ -233,7 +236,7 @@
         data.append("file", file);
         data.append("filename", file.name);
         $.ajax({
-            url: "manager/photosettings",
+            url: "managerx/photosettings",
             method: "post",
             data: data,
             processData: false,
@@ -254,7 +257,7 @@
             return;
         }
         $.ajax({
-            url: "manager/changepwd",
+            url: "managerx/changepwd",
             method: "post",
             data: {"pwd": f},
             success: resp => {

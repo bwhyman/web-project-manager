@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  web-project-tomcat:
+    image: tomcat:9
+    volumes:
+      - ./tomcat/webapps/:/usr/local/tomcat/webapps/
+      - /etc/localtime:/etc/localtime
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - '80:8080'

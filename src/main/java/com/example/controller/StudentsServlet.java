@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/manager/students")
+@WebServlet("/managerx/students")
 public class StudentsServlet extends HttpServlet {
     ObjectMapper objectMapper = new ObjectMapper();
     @Override

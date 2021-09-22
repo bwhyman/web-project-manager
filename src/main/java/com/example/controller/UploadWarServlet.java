@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@WebServlet("/manager/uploadwar")
+@WebServlet("/managerx/uploadwar")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10)
 public class UploadWarServlet extends HttpServlet {
     // Path base = Path.of("D:/apache-tomcat-9.0.38/webapps/");

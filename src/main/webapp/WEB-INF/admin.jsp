@@ -22,6 +22,7 @@
     <tbody>
     </tbody>
 </table>
+<jsp:include page="profile.jsp" />
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 
 <script>
@@ -74,7 +75,7 @@
 
     $("#button-upload-excel").click(() => {
         $.ajax({
-            url: "manager/students",
+            url: "managerx/students",
             method: "post",
             data: {"students": JSON.stringify(students)},
             success: resp => {
