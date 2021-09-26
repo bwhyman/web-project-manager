@@ -26,7 +26,6 @@ public class PhotoSettingsServlet extends HttpServlet {
         String s = Base64.getEncoder().encodeToString(part.getInputStream().readAllBytes());
         UserService.updatePhoto(user.getId(), s);
         user.setPhoto(s);
-        req.setAttribute("photo", s);
-        req.getRequestDispatcher("/WEB-INF/photosettings.jsp").forward(req, resp);
+        resp.getWriter().print(s);
     }
 }

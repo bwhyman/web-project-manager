@@ -68,7 +68,7 @@
             <td>
                 <c:if test="${p.user.repositoryUrl != null && p.user.repositoryUrl.length() > 0}">
                     <a href="${p.user.repositoryUrl}" target="_blank"><i
-                            class="material-icons info-link">local_activity</i></a>
+                            class="material-icons info-link" title="${p.user.repositoryUrl}">local_activity</i></a>
                 </c:if>
             </td>
             <td>
@@ -79,7 +79,8 @@
                 <c:if test="${p.index != null}">
                     <c:set var="url" value="/${p.user.number}/${p.index}"/>
                 </c:if>
-                <a href="${url}" target="_blank"><i class="material-icons info-link">link</i></a>
+                <a href="${url}" target="_blank"><i class="material-icons info-link"
+                                                    title="${url}">link</i></a>
             </td>
             <td>
                 <div style="font-size: 0.5rem; display: inline-block; text-align: center">${date}<br>${time}</div>

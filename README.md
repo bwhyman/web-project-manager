@@ -6,7 +6,7 @@
 ![数据表](./asserts/table.PNG)  
 
 [系统网址](http://114.116.213.241/web-project-manager/)  
-[maven打war包配置视频](https://mooc1-1.chaoxing.com/nodedetailcontroller/visitnodedetail?courseId=91374545&knowledgeId=387884587)
+[maven打war包配置视频](https://mooc1-1.chaoxing.com/nodedetailcontroller/visitnodedetail?courseId=91374545&knowledgeId=387250418)
 
 基于jquery/ajax/bootstrap/servlet/jstl模拟单页面组件化开发实现，无事务，无容器    
 照片尺寸较小，上传后在服务器端按base64编码保存在数据库  

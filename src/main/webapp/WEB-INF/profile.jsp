@@ -175,11 +175,11 @@
         <i class="material-icons">edit</i>
     </a>
 </p>
-<div class="collapse" id="settings">
+<div class="collapse show" id="settings">
     <div class="card card-body">
         <div id="show-photo">
             <c:if test="${sessionScope.user.photo != null && sessionScope.user.photo.length() > 10}">
-                <img src="data:image/png;base64,${sessionScope.user.photo}" alt="photo"
+                <img src="data:image/png;base64,${sessionScope.user.photo}" alt="photo" id="img-photo"
                      style="width: 160px;height: 160px;border: 1px solid aquamarine; border-radius: 10px">
             </c:if>
             <c:if test="${sessionScope.user.photo == null || sessionScope.user.photo.length() < 10}">
@@ -242,7 +242,7 @@
             processData: false,
             contentType: false,
             success: resp => {
-                $("#show-photo").html(resp);
+                $("#img-photo").prop("src", "data:image/png;base64," + resp);
                 uploadTable();
             }
         })
