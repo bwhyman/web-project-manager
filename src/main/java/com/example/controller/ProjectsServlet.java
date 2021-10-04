@@ -17,9 +17,10 @@ import java.util.Optional;
 public class ProjectsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("projects",
-                Optional.ofNullable(ProjectsCache.listProjects())
-                        .orElse(ProjectService.listProjects()));
+        if (ProjectsCache.listProjects() == null) {
+            ProjectsCache.setProjects(ProjectService.listProjects());
+        }
+        req.setAttribute("projects",ProjectsCache.listProjects());
         req.getRequestDispatcher("/WEB-INF/project-table.jsp").forward(req, resp);
     }
 }

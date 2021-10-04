@@ -91,7 +91,7 @@
 </table>
 
 <script>
-    let photos = [{}];
+    // photos 声明在index.html
     $("i.info").hover(function () {
         let photo;
         let uid = $(this).data("uid");

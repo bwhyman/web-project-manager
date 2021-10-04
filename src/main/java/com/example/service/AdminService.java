@@ -33,4 +33,15 @@ public class AdminService {
             }
         }
     }
+
+    public static void removeDeploy(String number) {
+        String sql = "delete p from project p join user u on u.id=p.user_id where u.number=?";
+        try(Connection conn = DataSourceUtils.getConnection();
+            PreparedStatement s = conn.prepareStatement(sql)) {
+            s.setString(1, number);
+            s.executeUpdate();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

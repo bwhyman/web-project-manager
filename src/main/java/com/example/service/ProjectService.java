@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ProjectService {
     public static void updateProject(int pid, String index) {
-        String sql = "update project p set p.index=?, p.selfaddress=null, p.updatetime=? where p.id=?";
+        String sql = "update project p set p.`index`=?, p.selfaddress=null, p.updatetime=? where p.id=?";
         try (Connection conn = DataSourceUtils.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, index);
@@ -22,8 +22,6 @@ public class ProjectService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        // cache
-        ProjectsCache.setProjects(listProjects());
     }
     public static void updateProjectSelf(int pid, String self) {
         String sql = "update project p set p.selfaddress=?, p.index=null where p.id=?";
@@ -35,8 +33,6 @@ public class ProjectService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        // cache
-        ProjectsCache.setProjects(listProjects());
     }
 
     public static int addProject(int uid) {
@@ -54,8 +50,6 @@ public class ProjectService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        // cache
-        ProjectsCache.setProjects(listProjects());
         return id;
     }
 

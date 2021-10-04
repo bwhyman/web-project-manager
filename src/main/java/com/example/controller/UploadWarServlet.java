@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.ProjectsCache;
 import com.example.entity.Project;
 import com.example.entity.User;
 import com.example.service.ProjectService;
@@ -18,8 +19,6 @@ import java.nio.file.Path;
 @WebServlet("/managerx/uploadwar")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10)
 public class UploadWarServlet extends HttpServlet {
-    // Path base = Path.of("D:/apache-tomcat-9.0.38/webapps/");
-    // Path base = Path.of("E:/");
     Path base = Path.of("/usr/local/tomcat/webapps/");
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,9 +27,14 @@ public class UploadWarServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         Project project = ProjectService.getProject(user.getId());
         int pid = project == null ? ProjectService.addProject(user.getId()) : project.getId();
-
         ProjectService.updateProject(pid, index);
+        ProjectsCache.setProjects(null);
         Path path = base.resolve(Path.of(user.getNumber() + ".war"));
-        Files.write(path, p.getInputStream().readAllBytes());
+        try {
+            Files.write(path, p.getInputStream().readAllBytes());
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
+        resp.getWriter().print("ok");
     }
 }

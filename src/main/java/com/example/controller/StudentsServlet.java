@@ -20,5 +20,6 @@ public class StudentsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = objectMapper.readValue(req.getParameter("students"), new TypeReference<List<User>>() {});
         AdminService.addStudents(users);
+        resp.getWriter().print("ok");
     }
 }

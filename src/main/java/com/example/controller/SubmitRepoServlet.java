@@ -1,8 +1,7 @@
 package com.example.controller;
 
-import com.example.entity.Project;
+import com.example.ProjectsCache;
 import com.example.entity.User;
-import com.example.service.ProjectService;
 import com.example.service.UserService;
 
 import javax.servlet.ServletException;
@@ -19,6 +18,8 @@ public class SubmitRepoServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         String repo = req.getParameter("repositoryurl");
         UserService.updateRepository(user.getId(), repo);
+        ProjectsCache.setProjects(null);
         user.setRepositoryUrl(repo);
+        resp.getWriter().print("ok");
     }
 }

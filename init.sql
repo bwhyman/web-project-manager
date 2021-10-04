@@ -9,7 +9,6 @@ create table if not exists `web-project`.user
     clazz         varchar(45)   null,
     role          int           not null,
     photo         mediumtext    null,
-    showphoto     int default 1 not null,
     repositoryurl varchar(255)  null,
     index (number)
 );

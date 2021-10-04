@@ -1,5 +1,14 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<h2>删除部署项目</h2>
+<div class="form-group">
+    <input type="text" name="snumber"
+           class="form-control"
+           placeholder="删除部署信息学生学号">
+</div>
+<div class="form-group">
+    <button type="button" class="btn btn-primary" id="submit-remove">提交</button>
+</div>
 <h2>导入学生名单</h2>
 <div class="input-group mb-3">
     <div class="custom-file">
@@ -72,7 +81,6 @@
             }
         );
     }
-
     $("#button-upload-excel").click(() => {
         $.ajax({
             url: "managerx/students",
@@ -83,4 +91,16 @@
             }
         })
     })
+    $("#submit-remove").click(() => {
+        $.ajax({
+            url: "managerx/deploy",
+            method: "post",
+            data: {"snumber": $("input[name=snumber]").val()},
+            success: resp => {
+                $("#message").text("删除成功！");
+                $('#exampleModal').modal('show')
+            }
+        })
+    })
+
 </script>

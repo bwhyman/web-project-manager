@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.ProjectsCache;
 import com.example.entity.Project;
 import com.example.entity.User;
 import com.example.service.ProjectService;
@@ -20,5 +21,7 @@ public class SubmitSelfServlet extends HttpServlet {
         Project project = ProjectService.getProject(user.getId());
         int pid = project == null ? ProjectService.addProject(user.getId()) : project.getId();
         ProjectService.updateProjectSelf(pid, self);
+        ProjectsCache.setProjects(null);
+        resp.getWriter().print("ok");
     }
 }
