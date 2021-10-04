@@ -58,9 +58,9 @@
                     <span style="font-size: 0.5rem">${p.user.clazz}</span>
                 </div>
             </td>
-            <td><c:if test="${p.user.photo != null && p.user.photo.length() > 10}">
+            <td><c:if test="${p.user.showPhoto == 0}">
                 <div class="info">
-                    <i class="material-icons info info-link" data-photo="${p.user.photo}">info</i>
+                    <i class="material-icons info info-link" data-uid="${p.user.id}">info</i>
                     <div class="menu"></div>
                 </div>
             </c:if>
@@ -91,11 +91,30 @@
 </table>
 
 <script>
+    let photos = [{}];
     $("i.info").hover(function () {
-        let photo = $(this).data("photo");
-        $(this).next().html(`<img src="data:image/png;base64,\${photo}" alt="photo" style="width: 160px;height:
+        let photo;
+        let uid = $(this).data("uid");
+        let ph = photos.find(p => p.uid == uid);
+        if (ph) {
+            photo = ph.photo;
+            $(this).next().html(`<img src="\${photo}" alt="photo" style="width: 160px;height:
         160px;border: 1px solid aquamarine; border-radius: 10px">`);
-    }, function () {
-
-    })
+        } else {
+            $.ajax({
+                url: "photo",
+                data: {"uid": uid},
+                beforeSend: () => {
+                    $(this).next().html(`<img src="resources/circle-loading.gif" alt="photo" style="width: 160px;height:
+        160px;border: 1px solid aquamarine; border-radius: 10px">`);
+                },
+                success: resp => {
+                    photo = resp;
+                    $(this).next().html(`<img src="\${photo}" alt="photo" style="width: 160px;height:
+        160px;border: 1px solid aquamarine; border-radius: 10px">`);
+                    photos.push({"uid": uid, "photo": photo});
+                }
+            });
+        }
+    }, () => {})
 </script>

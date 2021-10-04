@@ -31,7 +31,7 @@
                 因此，请求必须是相对于自己项目为根的请求。参考以下首页地址的前缀</span></p>
             <div class="input-group mb-3">
                 <div class="custom-file">
-                    <input id="war-file" type="file" class="custom-file-input">
+                    <input id="war-file" type="file" class="custom-file-input" accept=".war">
                     <label class="custom-file-label" for="war-file">选择项目war包</label>
                 </div>
             </div>
@@ -179,7 +179,7 @@
     <div class="card card-body">
         <div id="show-photo">
             <c:if test="${sessionScope.user.photo != null && sessionScope.user.photo.length() > 10}">
-                <img src="data:image/png;base64,${sessionScope.user.photo}" alt="photo" id="img-photo"
+                <img src="${sessionScope.user.photo}" alt="photo" id="img-photo"
                      style="width: 160px;height: 160px;border: 1px solid aquamarine; border-radius: 10px">
             </c:if>
             <c:if test="${sessionScope.user.photo == null || sessionScope.user.photo.length() < 10}">
@@ -218,6 +218,7 @@
     </div>
 </div>
 <script>
+    let base64Data;
     $("#student-photo").change(function () {
         let file = $(this).prop('files')[0];
         $(this).next().text(file.name);
@@ -227,23 +228,24 @@
             $("#submit-settings").prop("disabled", true);
             return;
         }
-
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = e => {
+            base64Data = e.target.result;
+            // $("#img-photo").prop("src", data);
+        };
         $("#submit-settings").prop("disabled", false);
     })
     $("#submit-settings").click(() => {
-        let file = $('#student-photo').prop('files')[0];
-        let data = new FormData();
-        data.append("file", file);
-        data.append("filename", file.name);
         $.ajax({
             url: "managerx/photosettings",
             method: "post",
-            data: data,
-            processData: false,
-            contentType: false,
+            data: {"base64": base64Data},
             success: resp => {
-                $("#img-photo").prop("src", "data:image/png;base64," + resp);
+                $("#img-photo").prop("src", base64Data);
                 uploadTable();
+                $("#message").text("更新成功");
+                $('#exampleModal').modal('show')
             }
         })
     })

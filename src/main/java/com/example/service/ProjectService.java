@@ -61,7 +61,9 @@ public class ProjectService {
 
     public static List<Project> listProjects() {
         List<Project> list = new ArrayList<>();
-        String sql = "select * from project p left join user u on p.user_id=u.id order by p.updatetime desc";
+        String sql = "select user_id, isnull(photo) as showphoto, `index`, name, number, clazz, repositoryurl, " +
+                "updatetime, selfaddress " +
+                "from project p left join user u on p.user_id=u.id order by p.updatetime desc";
         try (Connection conn = DataSourceUtils.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -72,7 +74,6 @@ public class ProjectService {
                     user.setName(rs.getString("name"));
                     user.setNumber(rs.getString("number"));
                     user.setClazz(rs.getNString("clazz"));
-                    user.setPhoto(rs.getString("photo"));
                     user.setShowPhoto(rs.getInt("showphoto"));
                     user.setRepositoryUrl(rs.getString("repositoryurl"));
                     p.setIndex(rs.getString("index"));
