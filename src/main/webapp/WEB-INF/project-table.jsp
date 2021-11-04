@@ -73,14 +73,18 @@
             </td>
             <td>
                 <c:set var="url" value=""/>
+                <c:set var="icon" value="link"/>
+                <c:set var="style" value="" />
                 <c:if test="${p.index == null}">
                     <c:set var="url" value="${p.selfAddress}"/>
+                    <c:set var="style" value="color:red" />
+                    <c:set var="icon" value="cloud_queue"/>
                 </c:if>
                 <c:if test="${p.index != null}">
                     <c:set var="url" value="/${p.user.number}/${p.index}"/>
                 </c:if>
                 <a href="${url}" target="_blank"><i class="material-icons info-link"
-                                                    title="${url}">link</i></a>
+                                                    title="${url}" style="${style}">${icon}</i></a>
             </td>
             <td>
                 <div style="font-size: 0.5rem; display: inline-block; text-align: center">${date}<br>${time}</div>
