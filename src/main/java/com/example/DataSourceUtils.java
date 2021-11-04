@@ -81,7 +81,7 @@ public class DataSourceUtils implements ServletContextListener {
      * 初始化admin数据
      */
     private void insertAdmin() {
-        String sqlInsert = "insert user(name, number ,password, role) values(?,?,?,?) ";
+        String sqlInsert = "insert into user(name, number ,password, role) values(?,?,?,?) ";
         try (Connection conn = dSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlInsert)) {
             ps.setString(1, "BO");
