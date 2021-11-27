@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -26,10 +28,32 @@ public class DataSourceUtils implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        LocalDateTime dl = null;
+        String dlStr = null;
         executeInitSqlFile();
-        if (checkUserTable()) {
-            insertAdmin();
+        if (!checkUserTable()) {
+             dl = LocalDateTime.now().plusMonths(4);
+             dlStr = dl.toString().replace("T", " ").substring(0, 16);
+            sce.getServletContext().setAttribute("deadlineT", dl);
+            sce.getServletContext().setAttribute("deadline", dlStr);
+            insertAdmin(dlStr);
+        } else {
+            String sql = "select u.clazz from user u where u.number=?";
+            try (Connection conn = dSource.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, "2046204601");
+                try(ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        dlStr = rs.getString("clazz");
+                        dl = LocalDateTime.parse(dlStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                    }
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
+        sce.getServletContext().setAttribute("deadlineT", dl);
+        sce.getServletContext().setAttribute("deadline", dlStr);
     }
 
     /**
@@ -45,7 +69,6 @@ public class DataSourceUtils implements ServletContextListener {
                 builder.append(s);
             }
             String reader = builder.toString();
-            //LOGGER.info(reader)
             String[] strings = reader.split("###");
             for (String sql : strings) {
                 LOGGER.info(sql);
@@ -64,13 +87,11 @@ public class DataSourceUtils implements ServletContextListener {
      * @return
      */
     private boolean checkUserTable() {
-        String sqlCount = "select count(id) from user";
+        String sqlCount = "select count(u.id) from user u";
         try (Connection conn = dSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlCount);
              ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return false;
-            }
+            return rs.next();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,14 +101,16 @@ public class DataSourceUtils implements ServletContextListener {
     /**
      * 初始化admin数据
      */
-    private void insertAdmin() {
-        String sqlInsert = "insert into user(name, number ,password, role) values(?,?,?,?) ";
+    private void insertAdmin(String dlStr) {
+        String sqlInsert = "insert into user(name, number ,password, role, clazz) values(?,?,?,?,?) ";
         try (Connection conn = dSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlInsert)) {
             ps.setString(1, "BO");
             ps.setString(2, "2046204601");
-            ps.setString(2, "2046204601");
-            ps.setInt(3, 1);
+            ps.setString(3, "2046204601");
+            ps.setInt(4, 1);
+            ps.setString(5, dlStr);
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }

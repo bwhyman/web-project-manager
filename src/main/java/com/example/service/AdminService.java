@@ -44,4 +44,17 @@ public class AdminService {
             throwables.printStackTrace();
         }
     }
+
+    public static void updateDeadline(String time, String number) {
+        String sql = "update user u set u.clazz=? where u.number=?";
+        try(Connection conn = DataSourceUtils.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, time);
+            ps.setString(2, number);
+            ps.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

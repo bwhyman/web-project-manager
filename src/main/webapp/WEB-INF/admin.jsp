@@ -1,5 +1,16 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<h2>更新截止试卷</h2>
+${applicationScope.deadline}
+<div class="form-group">
+    <input type="text" name="time"
+           class="form-control"
+           placeholder="yyyy-MM-dd HH:mm">
+</div>
+<div class="form-group">
+    <button type="button" class="btn btn-primary" id="submit-time">提交</button>
+</div>
 <h2>删除部署项目</h2>
 <div class="form-group">
     <input type="text" name="snumber"
@@ -98,6 +109,18 @@
             data: {"snumber": $("input[name=snumber]").val()},
             success: resp => {
                 $("#message").text("删除成功！");
+                $('#exampleModal').modal('show')
+            }
+        })
+    })
+
+    $("#submit-time").click(function () {
+        $.ajax({
+            url: "managex/updatedeadline",
+            method: "post",
+            data: {"time": $("input[name=time]").val()},
+            success: resp => {
+                $("#message").text("更新成功！");
                 $('#exampleModal').modal('show')
             }
         })

@@ -1,6 +1,4 @@
-create database if not exists `web-project`;
-###
-create table if not exists `web-project`.user
+create table if not exists user
 (
     id int auto_increment primary key,
     name varchar(45) not null,
@@ -13,7 +11,7 @@ create table if not exists `web-project`.user
     index (number)
 );
 ###
-create table if not exists `web-project`.project
+create table if not exists project
 (
     id          int auto_increment primary key,
     `index`     varchar(45)                         null,
