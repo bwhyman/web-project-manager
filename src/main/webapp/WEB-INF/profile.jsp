@@ -178,11 +178,11 @@
 <div class="collapse show" id="settings">
     <div class="card card-body">
         <div id="show-photo">
-            <c:if test="${sessionScope.user.photo != null && sessionScope.user.photo.length() > 10}">
+            <c:if test="${sessionScope.user.photo.length() > 0}">
                 <img src="${sessionScope.user.photo}" alt="photo" id="img-photo"
                      style="width: 160px;height: 160px;border: 1px solid aquamarine; border-radius: 10px">
             </c:if>
-            <c:if test="${sessionScope.user.photo == null || sessionScope.user.photo.length() < 10}">
+            <c:if test="${sessionScope.user.photo.length() == 0}">
                 <i class="material-icons" style="font-size: 10rem">photo_camera</i>
             </c:if>
         </div>

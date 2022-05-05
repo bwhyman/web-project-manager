@@ -12,7 +12,7 @@ import java.util.List;
 public class AdminService {
     public static void addStudents(List<User> users) {
         String checkSql = "select id from user where number=?";
-        String sql = "insert into user(number, name, password, clazz, role) values(?,?,?,?,?)";
+        String sql = "insert into user(number, name, password, clazz, role, photo) values(?,?,?,?,?,?)";
         for (User u : users) {
             try(Connection conn = DataSourceUtils.getConnection();
                 PreparedStatement s = conn.prepareStatement(checkSql);) {
@@ -25,6 +25,7 @@ public class AdminService {
                         sInsert.setString(3, u.getNumber());
                         sInsert.setString(4, u.getClazz());
                         sInsert.setInt(5, u.getRole());
+                        sInsert.setString(6, "");
                         sInsert.executeUpdate();
                     }
                 }

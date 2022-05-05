@@ -30,6 +30,7 @@ public class DataSourceUtils implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         LocalDateTime dl = null;
         String dlStr = null;
+        LOGGER.info("contextInitialized");
         executeInitSqlFile();
         if (!checkUserTable()) {
              dl = LocalDateTime.now().plusMonths(4);
@@ -87,11 +88,13 @@ public class DataSourceUtils implements ServletContextListener {
      * @return
      */
     private boolean checkUserTable() {
-        String sqlCount = "select count(u.id) from user u";
+        String sqlCount = "select u.id from user u";
         try (Connection conn = dSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlCount);
              ResultSet rs = ps.executeQuery()) {
-            return rs.next();
+            boolean r = rs.next();
+            LOGGER.info("checkUserTable: " + r);
+            return r;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +105,7 @@ public class DataSourceUtils implements ServletContextListener {
      * 初始化admin数据
      */
     private void insertAdmin(String dlStr) {
-        String sqlInsert = "insert into user(name, number ,password, role, clazz) values(?,?,?,?,?) ";
+        String sqlInsert = "insert into user(name, number ,password, role, clazz, photo) values(?,?,?,?,?,?) ";
         try (Connection conn = dSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlInsert)) {
             ps.setString(1, "BO");
@@ -110,6 +113,7 @@ public class DataSourceUtils implements ServletContextListener {
             ps.setString(3, "2046204601");
             ps.setInt(4, 1);
             ps.setString(5, dlStr);
+            ps.setString(6, "");
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

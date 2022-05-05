@@ -55,7 +55,7 @@ public class ProjectService {
 
     public static List<Project> listProjects() {
         List<Project> list = new ArrayList<>();
-        String sql = "select user_id, isnull(photo) as showphoto, `index`, name, number, clazz, repositoryurl, " +
+        String sql = "select user_id, length(photo)!=0 as showphoto, `index`, name, number, clazz, repositoryurl, " +
                 "updatetime, selfaddress " +
                 "from project p left join user u on p.user_id=u.id order by p.updatetime desc";
         try (Connection conn = DataSourceUtils.getConnection();

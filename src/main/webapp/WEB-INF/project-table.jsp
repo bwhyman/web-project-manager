@@ -26,7 +26,10 @@
     }
 
 </style>
-<p class="text-danger"><b>课设提交截至时间，${applicationScope.deadline}。过期提交无效。</b></p>
+<p class="text-danger">
+    <b>凡发布包含低俗、谩骂、政治等违反互联网法律法规信息内容，将直接删除部署并留存证据截图至专业，修改数据后可重新提交部署。</b> <br>
+    <b>课设提交截至时间，${applicationScope.deadline}。过期提交无效。</b>
+</p>
 <table class="table">
     <thead>
     <tr>
@@ -58,7 +61,7 @@
                     <span style="font-size: 0.5rem">${p.user.clazz}</span>
                 </div>
             </td>
-            <td><c:if test="${p.user.showPhoto == 0}">
+            <td><c:if test="${p.user.showPhoto == 1}">
                 <div class="info">
                     <i class="material-icons info info-link" data-uid="${p.user.id}">info</i>
                     <div class="menu"></div>
