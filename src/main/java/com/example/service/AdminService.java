@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AdminService {
     public static void addStudents(List<User> users) {
-        String checkSql = "select id from user where number=?";
+        String checkSql = "select id from user u where u.number=?";
         String sql = "insert into user(number, name, password, clazz, role, photo) values(?,?,?,?,?,?)";
         for (User u : users) {
             try(Connection conn = DataSourceUtils.getConnection();
@@ -57,5 +57,18 @@ public class AdminService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static int resetPassword(String number) {
+        String sql = "update user u set u.password=? where u.number=?";
+        try(Connection conn = DataSourceUtils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, number);
+            ps.setString(2, number);
+            return ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
     }
 }

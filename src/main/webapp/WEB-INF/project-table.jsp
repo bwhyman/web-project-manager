@@ -56,7 +56,7 @@
         <tr>
             <th scope="row">${s.count}</th>
             <td>
-                <div style="display: inline-block; text-align: center">
+                <div style="display: inline-block;">
                         ${p.user.name}<br>
                     <span style="font-size: 0.5rem">${p.user.clazz}</span>
                 </div>

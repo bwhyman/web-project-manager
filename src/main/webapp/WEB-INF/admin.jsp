@@ -20,6 +20,15 @@ ${applicationScope.deadline}
 <div class="form-group">
     <button type="button" class="btn btn-primary" id="submit-remove">提交</button>
 </div>
+<h2>重置密码</h2>
+<div class="form-group">
+    <input type="text" name="resetpassword-snumber"
+           class="form-control"
+           placeholder="学生学号">
+</div>
+<div class="form-group">
+    <button type="button" class="btn btn-primary" id="submit-resetpassword">提交</button>
+</div>
 <h2>导入学生名单</h2>
 <div class="input-group mb-3">
     <div class="custom-file">
@@ -121,6 +130,18 @@ ${applicationScope.deadline}
             data: {"time": $("input[name=time]").val()},
             success: resp => {
                 $("#message").text("更新成功！");
+                $('#exampleModal').modal('show')
+            }
+        })
+    })
+
+    $("#submit-resetpassword").click(() => {
+        $.ajax({
+            url: "managex/resetpassword",
+            method: "post",
+            data: {"number": $("input[name=resetpassword-snumber]").val().trim()},
+            success: resp => {
+                $("#message").text(resp);
                 $('#exampleModal').modal('show')
             }
         })

@@ -3,7 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Test1 {
+public class SQLScriptWrite {
 
     public static void main(String[] args) throws IOException {
         List<String> numbers = Files.readAllLines(Path.of("D:/stus.txt"));
