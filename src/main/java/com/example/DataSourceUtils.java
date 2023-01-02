@@ -1,9 +1,9 @@
 package com.example;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -64,7 +64,7 @@ public class DataSourceUtils implements ServletContextListener {
         try (InputStream io = DataSourceUtils.class.getClassLoader().getResourceAsStream("init.sql")) {
             byte[] buffer = new byte[1024];
             StringBuilder builder = new StringBuilder();
-            int length = 0;
+            int length;
             while ((length = io.read(buffer)) != -1) {
                 String s = new String(Arrays.copyOf(buffer, length));
                 builder.append(s);

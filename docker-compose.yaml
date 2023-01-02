@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   web-project-tomcat:
-    image: tomcat:9
+    image: tomcat:10
     volumes:
       - ./tomcat/webapps/:/usr/local/tomcat/webapps/
       - /etc/localtime:/etc/localtime

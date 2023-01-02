@@ -1,11 +1,10 @@
 # web-project-manager
 为学生课设作业提供，上传war包后自动部署在Tomcat服务器的平台  
-部署环境：Docker Tomcat9/MySQL8  
-生产环境基于JDK11，不再支持运行JDK8编译的项目  
+部署环境：Docker Tomcat10+MySQL8  
 简单的数据表结构  
 ![数据表](./asserts/table.PNG)  
 
-[系统网址](http://114.116.213.241/web-project-manager/)  
+
 [maven打war包配置视频](https://mooc1-1.chaoxing.com/nodedetailcontroller/visitnodedetail?courseId=91374545&knowledgeId=387250418)
 
 基于jquery/ajax/bootstrap/servlet/jstl模拟单页面组件化开发实现，无事务，无容器    
@@ -14,6 +13,9 @@
 嗯啊嗯啊，上一次使用这套技术栈写实际项目是2015年，转眼5年了，还好头发没秃。。。  
 
 ### Update
+#### 2022.12.29
+更新到jakarta EE+Tomcat10
+
 #### 2021.11.10
 添加修改提交时间功能  
 
