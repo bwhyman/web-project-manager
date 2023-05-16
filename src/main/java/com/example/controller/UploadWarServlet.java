@@ -23,11 +23,9 @@ public class UploadWarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Part p = req.getPart("file");
-        String index = req.getParameter("index");
         User user = (User) req.getSession().getAttribute("user");
         Project project = ProjectService.getProject(user.getId());
         int pid = project == null ? ProjectService.addProject(user.getId()) : project.getId();
-        ProjectService.updateProject(pid, index);
         ProjectsCache.setProjects(null);
         Path path = base.resolve(Path.of(user.getNumber() + ".war"));
         try {

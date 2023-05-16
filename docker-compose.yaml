@@ -4,7 +4,6 @@ services:
     image: tomcat:10
     volumes:
       - ./tomcat/webapps/:/usr/local/tomcat/webapps/
-      - /etc/localtime:/etc/localtime
     environment:
       TZ: Asia/Shanghai
     ports:

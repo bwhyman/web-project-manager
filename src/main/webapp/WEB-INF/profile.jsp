@@ -36,6 +36,9 @@
                 </div>
             </div>
             <div class="form-group">
+                <button type="button" class="btn btn-primary" id="upload-war" disabled>提交</button>
+            </div>
+            <div class="form-group">
                 <label for="basic-url">网站首页地址。一个Servlet请求地址或index.html/home.jsp等资源地址</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -46,7 +49,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" id="upload-war" disabled>提交</button>
+                <button type="button" class="btn btn-primary" id="update-index">提交</button>
             </div>
             <div class="input-group mb-3">
                 <div class="custom-control custom-switch">
@@ -87,14 +90,21 @@
     $("#customSwitch1").change(function () {
         let self = $(this)[0].checked;
         $('input[name=self-address]').prop('disabled', !self);
-        $("input[name=index]").prop('disabled', self);
+        $("#submit-self").prop("disabled", !self);
+
         $("#war-file").prop('disabled', self);
-        if (self) {
+        $("#upload-war").prop("disabled", self);
+
+        $("input[name=index]").prop('disabled', self);
+        $("#update-index").prop("disabled", self);
+
+
+        /*if (self) {
             $("#upload-war").prop("disabled", true);
         } else {
             $("#submit-self").prop("disabled", true);
 
-        }
+        }*/
     })
     $("#war-file").change(function () {
         let file = $(this).prop('files')[0];
@@ -119,7 +129,6 @@
         let data = new FormData();
         let file = $('#war-file').prop('files')[0];
         data.append('file', file);
-        data.append("index", $("input[name=index]").val());
         $.ajax({
             url: "managerx/uploadwar",
             method: "post",
@@ -142,6 +151,18 @@
                 uploadTable();
             }
         });
+    })
+    $("#update-index").click(() => {
+        $.ajax({
+            url: "managerx/updateindex",
+            method: "post",
+            data: {"index": $("input[name=index]").val()},
+            success: resp => {
+                $("#message").text("主页地址提交成功");
+                $('#exampleModal').modal('show')
+                uploadTable();
+            }
+        })
     })
 
     $("input[name=self-address]").change(function () {
@@ -177,20 +198,16 @@
 </p>
 <div class="collapse show" id="settings">
     <div class="card card-body">
-        <div id="show-photo">
+        <div style="margin: 5px;" id="show-photo">
             <c:if test="${sessionScope.user.photo.length() > 0}">
                 <img src="${sessionScope.user.photo}" alt="photo" id="img-photo"
-                     style="width: 160px;height: 160px;border: 1px solid aquamarine; border-radius: 10px">
-            </c:if>
-            <c:if test="${sessionScope.user.photo.length() == 0}">
-                <i class="material-icons" style="font-size: 10rem">photo_camera</i>
+                     style="width: 160px;height: 160px; border-radius: 10px">
             </c:if>
         </div>
-        <p>老师认识来上课的同学，但是和名字对不上号啊。上传张照片吧，300KB</p>
         <div class="form-group">
             <div class="custom-file">
-                <input id="student-photo" type="file" class="custom-file-input" accept=".jpg, .png">
-                <label class="custom-file-label" for="student-photo">照片</label>
+                <input id="student-photo" type="file" class="custom-file-input" accept=".jpg, .png, .svg">
+                <label class="custom-file-label" for="student-photo">上传头像，300KB</label>
             </div>
         </div>
         <div class="form-group">
@@ -232,7 +249,6 @@
         reader.readAsDataURL(file);
         reader.onload = e => {
             base64Data = e.target.result;
-            // $("#img-photo").prop("src", data);
         };
         $("#submit-settings").prop("disabled", false);
     })
@@ -242,7 +258,8 @@
             method: "post",
             data: {"base64": base64Data},
             success: resp => {
-                $("#img-photo").prop("src", base64Data);
+                $("#show-photo").html(`<img src="\${base64Data}" alt="photo" style="width: 160px;height:
+        160px;border-radius: 10px">`);
                 uploadTable();
                 $("#message").text("更新成功");
                 $('#exampleModal').modal('show')

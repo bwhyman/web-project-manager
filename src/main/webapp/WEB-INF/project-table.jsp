@@ -106,19 +106,19 @@
         if (ph) {
             photo = ph.photo;
             $(this).next().html(`<img src="\${photo}" alt="photo" style="width: 160px;height:
-        160px;border: 1px solid aquamarine; border-radius: 10px">`);
+        160px;border-radius: 10px">`);
         } else {
             $.ajax({
                 url: "photo",
                 data: {"uid": uid},
                 beforeSend: () => {
                     $(this).next().html(`<img src="resources/circle-loading.gif" alt="photo" style="width: 160px;height:
-        160px;border: 1px solid aquamarine; border-radius: 10px">`);
+        160px; border-radius: 10px">`);
                 },
                 success: resp => {
                     photo = resp;
                     $(this).next().html(`<img src="\${photo}" alt="photo" style="width: 160px;height:
-        160px;border: 1px solid aquamarine; border-radius: 10px">`);
+        160px;border-radius: 10px">`);
                     photos.push({"uid": uid, "photo": photo});
                 }
             });

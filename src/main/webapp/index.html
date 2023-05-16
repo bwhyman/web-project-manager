@@ -10,9 +10,6 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/material-design-icons/3.0.2/iconfont/material-icons.css"
           rel="stylesheet">
     <style>
-        html {
-            overflow-y: overlay;
-        }
         .container {
             background: indigo;
             min-height: 100vh;
@@ -82,7 +79,7 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
 <script src="resources/uploadtable.js"></script>
 <script>
-    var photos = [{}];
+    let photos = [{}];
     $(function () {
         uploadTable();
         $.ajax({
