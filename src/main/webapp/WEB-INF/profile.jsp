@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" id="upload-war" disabled>提交</button>
+                <button type="button" class="btn btn-primary" id="upload-war">提交</button>
             </div>
             <div class="form-group">
                 <label for="basic-url">网站首页地址。一个Servlet请求地址或index.html/home.jsp等资源地址</label>
@@ -98,26 +98,19 @@
         $("input[name=index]").prop('disabled', self);
         $("#update-index").prop("disabled", self);
 
-
-        /*if (self) {
-            $("#upload-war").prop("disabled", true);
-        } else {
-            $("#submit-self").prop("disabled", true);
-
-        }*/
     })
-    $("#war-file").change(function () {
-        let file = $(this).prop('files')[0];
-        $(this).next().text(file.name);
-        let d = file.size > 0;
-        $("#upload-war").prop("disabled", !d);
-    })
+
 
     $("#submit-repo").click(() => {
+        let rep = $("input[name=repositoryurl]").val();
+        if(rep.trim().length === 0) {
+            $("#message").text("输入地址为空");
+            return
+        }
         $.ajax({
             url: "managerx/submitrepo",
             method: "post",
-            data: {"repositoryurl": $("input[name=repositoryurl]").val()},
+            data: {"repositoryurl": rep},
             success: resp => {
                 $("#message").text("修改成功");
                 $('#exampleModal').modal('show');
@@ -125,9 +118,20 @@
             }
         })
     })
+
+    $("#war-file").change(function () {
+        let file = $(this).prop('files')[0];
+        $(this).next().text(file.name);
+    })
+
     $("#upload-war").click(() => {
-        let data = new FormData();
         let file = $('#war-file').prop('files')[0];
+        if(file === undefined || file.size === 0) {
+            $("#message").text("文件读取错误！");
+            $('#exampleModal').modal('show')
+            return
+        }
+        let data = new FormData();
         data.append('file', file);
         $.ajax({
             url: "managerx/uploadwar",
@@ -153,10 +157,17 @@
         });
     })
     $("#update-index").click(() => {
+        let index = $("input[name=index]").val();
+        console.log(index)
+        if(index.trim().length === 0) {
+            $("#message").text("默认主页地址无需提交");
+            $('#exampleModal').modal('show')
+            return
+        }
         $.ajax({
             url: "managerx/updateindex",
             method: "post",
-            data: {"index": $("input[name=index]").val()},
+            data: {"index": index},
             success: resp => {
                 $("#message").text("主页地址提交成功");
                 $('#exampleModal').modal('show')
