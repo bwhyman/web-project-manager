@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<h2>更新截止试卷</h2>
+<h2>更新截止时间</h2>
 ${applicationScope.deadline}
 <div class="form-group">
     <input type="text" name="time"
@@ -52,7 +52,7 @@ ${applicationScope.deadline}
     </tbody>
 </table>
 <jsp:include page="profile.jsp" />
-<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script>
     let students = [];
@@ -81,18 +81,22 @@ ${applicationScope.deadline}
                     let data = e.target.result;
                     let wb = XLSX.read(data, {type: "binary"});
                     let sheet = wb.Sheets[wb.SheetNames[0]];
-                    XLSX.utils.sheet_to_row_object_array(sheet).some(r => {
-                        let number = parseInt(r.__EMPTY);
-                        if (!isNaN(number)) {
+                    XLSX.utils.sheet_to_json(sheet).some(r => {
+                        console.log(r)
+                        let number = r['学号'];
+                        let name = r['姓名'];
+                        let clazz = r['学生班级'];
+                        if (number) {
                             students.push({
                                 number: number,
-                                name: r.__EMPTY_1,
-                                clazz: r.__EMPTY_3
+                                name: name,
+                                clazz: clazz
                             });
                         }
                     });
                 };
                 reader.onloadend = () => {
+                    console.log(students)
                     resolve(students);
                 };
                 reader.readAsBinaryString(file);

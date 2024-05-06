@@ -1,5 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<jsp:useBean id="project" scope="request" class="com.example.entity.Project"/>
+<jsp:useBean id="user" scope="session" class="com.example.entity.User"/>
+
 <%-- project --%>
 <p style="text-align: right">
     <a class="btn btn-primary" data-toggle="collapse" href="#project" aria-expanded="false"
@@ -11,13 +14,13 @@
 <div class="collapse show" id="project">
     <div class="alert alert-primary" role="alert">
         <span style="vertical-align: middle"><i class="material-icons info-link" id="logout" style="color: orangered">cloud_off</i></span>
-        ${sessionScope.user.name} / ${sessionScope.user.clazz}
+        ${user.name} / ${user.clazz}
     </div>
     <div class="card card-body">
         <form>
             <div class="input-group mb-3">
                 <div class="input-group mb-3">
-                    <input value="${sessionScope.user.repositoryUrl}" type="text" name="repositoryurl"
+                    <input value="${user.repositoryUrl}" type="text" name="repositoryurl"
                            class="form-control"
                            placeholder="项目源码仓库地址，可选">
                 </div>
@@ -42,7 +45,7 @@
                 <label for="basic-url">网站首页地址。一个Servlet请求地址或index.html/home.jsp等资源地址</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon3">${path}${sessionScope.user.number}/</span>
+                        <span class="input-group-text" id="basic-addon3">${path}${user.number}/</span>
                     </div>
                     <input value="${project.index}" name="index" type="text" class="form-control"
                            id="basic-url" aria-describedby="basic-addon3">
@@ -210,8 +213,8 @@
 <div class="collapse show" id="settings">
     <div class="card card-body">
         <div style="margin: 5px;" id="show-photo">
-            <c:if test="${sessionScope.user.photo.length() > 0}">
-                <img src="${sessionScope.user.photo}" alt="photo" id="img-photo"
+            <c:if test="${user.photo.length() > 0}">
+                <img src="${user.photo}" alt="photo" id="img-photo"
                      style="width: 160px;height: 160px; border-radius: 10px">
             </c:if>
         </div>

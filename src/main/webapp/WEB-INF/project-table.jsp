@@ -1,8 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<c:url var="bpath" value="/"></c:url>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<jsp:useBean id="projects" scope="request" type="java.util.List<com.example.entity.Project>"/>
+<c:url var="bpath" value="/" />
 <style>
 
     i.info-link {
@@ -48,6 +48,7 @@
     </tr>
     </thead>
     <tbody>
+
     <c:forEach var="p" items="${projects}" varStatus="s">
         <fmt:formatDate
                 pattern="yyyy-MM-dd"
@@ -60,7 +61,7 @@
             <td>
                 <div style="display: inline-block;">
                         ${p.user.name}<br>
-                    <span style="font-size: 0.5rem">${p.user.clazz}</span>
+                    <span style="font-size: 0.8rem">${p.user.clazz}</span>
                 </div>
             </td>
             <td><c:if test="${p.user.showPhoto == 1}">
@@ -71,28 +72,27 @@
             </c:if>
             </td>
             <td>
-                <c:if test="${p.user.repositoryUrl != null && p.user.repositoryUrl.length() > 0}">
-                    <a href="${p.user.repositoryUrl}" target="_blank"><i
-                            class="material-icons info-link" title="${p.user.repositoryUrl}">local_activity</i></a>
+                <c:if test="${p.user.repositoryUrl != null}">
+                    <a href="${p.user.repositoryUrl}" target="_blank">
+                        <i class="material-icons info-link" title="${p.user.repositoryUrl}">local_activity</i>
+                    </a>
                 </c:if>
             </td>
             <td>
-                <c:set var="url" value=""/>
+                <c:set var="url" value="/${p.user.number}/${p.index}"/>
                 <c:set var="icon" value="link"/>
                 <c:set var="style" value="" />
-                <c:if test="${p.index == null}">
+                <c:if test="${p.selfAddress != null}">
                     <c:set var="url" value="${p.selfAddress}"/>
                     <c:set var="style" value="color:red" />
                     <c:set var="icon" value="cloud_queue"/>
                 </c:if>
-                <c:if test="${p.index != null}">
-                    <c:set var="url" value="/${p.user.number}/${p.index}"/>
-                </c:if>
-                <a href="${url}" target="_blank"><i class="material-icons info-link"
-                                                    title="${url}" style="${style}">${icon}</i></a>
+                <a href="${url}" target="_blank">
+                    <i class="material-icons info-link" title="${url}" style="${style}">${icon}</i>
+                </a>
             </td>
             <td>
-                <div style="font-size: 0.5rem; display: inline-block; text-align: center">${date}<br>${time}</div>
+                <div style="font-size: 0.8rem; display: inline-block; text-align: center">${date}<br>${time}</div>
             </td>
         </tr>
     </c:forEach>
