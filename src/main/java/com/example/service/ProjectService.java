@@ -11,6 +11,16 @@ import java.util.Date;
 import java.util.List;
 
 public class ProjectService {
+    public static void updateProjectUpdateTime(int pid) {
+        String sql = "update project p set p.updatetime=now() where p.id=?";
+        try (Connection conn = DataSourceUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pid);
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
     public static void updateProject(int pid, String index) {
         String sql = "update project p set p.`index`=?, p.selfaddress=null, p.updatetime=? where p.id=?";
         try (Connection conn = DataSourceUtils.getConnection();

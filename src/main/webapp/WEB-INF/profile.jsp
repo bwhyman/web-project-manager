@@ -10,7 +10,7 @@
         <i class="material-icons">extension</i>
     </a>
 </p>
-<c:set var="path" value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}/" />
+<c:set var="path" value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}/"/>
 <div class="collapse show" id="project">
     <div class="alert alert-primary" role="alert">
         <span style="vertical-align: middle"><i class="material-icons info-link" id="logout" style="color: orangered">cloud_off</i></span>
@@ -60,10 +60,14 @@
                     <label class="custom-control-label" for="customSwitch1">部署在个人服务器</label>
                 </div>
             </div>
-            <div class="input-group mb-3">
-                <input value="${project.selfAddress}" disabled name="self-address" type="text" class="form-control"
-                       placeholder="部署在个人服务器的浏览地址">
+            <div class="form-group">
+                <label>包含协议的完整路径。例如: https://github.com/</label>
+                <div class="input-group mb-3">
+                    <input value="${project.selfAddress}" disabled name="self-address" type="text" class="form-control"
+                           placeholder="部署在个人服务器的浏览地址">
+                </div>
             </div>
+
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="submit-self" disabled>提交</button>
             </div>
@@ -106,7 +110,7 @@
 
     $("#submit-repo").click(() => {
         let rep = $("input[name=repositoryurl]").val();
-        if(rep.trim().length === 0) {
+        if (rep.trim().length === 0) {
             $("#message").text("输入地址为空");
             return
         }
@@ -129,7 +133,7 @@
 
     $("#upload-war").click(() => {
         let file = $('#war-file').prop('files')[0];
-        if(file === undefined || file.size === 0) {
+        if (file === undefined || file.size === 0) {
             $("#message").text("文件读取错误！");
             $('#exampleModal').modal('show')
             return
@@ -162,7 +166,7 @@
     $("#update-index").click(() => {
         let index = $("input[name=index]").val();
         console.log(index)
-        if(index.trim().length === 0) {
+        if (index.trim().length === 0) {
             $("#message").text("默认主页地址无需提交");
             $('#exampleModal').modal('show')
             return
@@ -185,10 +189,16 @@
     })
 
     $("#submit-self").click(() => {
+        const result = $("input[name=self-address]").val();
+        if (result.trim().length === 0) {
+            $("#message").text("地址为空");
+            $('#exampleModal').modal('show')
+            return
+        }
         $.ajax({
             url: "managerx/submitself",
             method: "post",
-            data: {"selfaddress": $("input[name=self-address]").val()},
+            data: {"selfaddress": result},
             success: resp => {
                 $("#message").text("修改成功");
                 $('#exampleModal').modal('show')
