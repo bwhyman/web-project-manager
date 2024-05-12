@@ -15,11 +15,14 @@
             margin: 0;
             box-sizing: border-box;
         }
+
         body {
-            max-width: 100vw;
+            max-width: calc(100vw - 17px);
         }
+
         .container {
             background: indigo;
+            max-width: 1140px;
             min-height: 100vh;
         }
 
@@ -30,11 +33,12 @@
 </head>
 <body>
 <div class="container">
-    <div class="row" style="height: 100%; padding-top: 56px;padding-bottom: 56px">
+    <div class="row" style="padding-top: 56px;padding-bottom: 56px">
         <div class="col-sm-12 col-md-2">
             <div class="card">
                 <div class="card-body" style="text-align: center">
-                    <div class="nav nav-fill flex-md-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <div class="nav nav-fill flex-md-column nav-pills" id="v-pills-tab" role="tablist"
+                         aria-orientation="vertical">
                         <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill"
                            href="#v-pills-home"
                            role="tab" aria-controls="v-pills-home" aria-selected="true"><i
@@ -65,7 +69,8 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,7 +96,7 @@
     $(function () {
         uploadTable();
         $.ajax({
-            url : "managerx/profile",
+            url: "managerx/profile",
             method: "get",
             dataType: "html",
             beforeSend: () => {
