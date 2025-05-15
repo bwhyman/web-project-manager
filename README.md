@@ -1,6 +1,6 @@
 # web-project-manager
 为学生课设作业提供，上传war包后自动部署在Tomcat服务器的平台  
-部署环境：Docker Tomcat10+MySQL8  
+部署环境：Docker tomcat:10-jre21 + MySQL:8.4  
 简单的数据表结构  
 ![数据表](./asserts/table.PNG)  
 
@@ -13,6 +13,9 @@
 嗯啊嗯啊，上一次使用这套技术栈写实际项目是2015年，转眼5年了，还好头发没秃。。。  
 
 ### Update
+#### 2025.05.15
+更新到java21；添加导入模板。
+
 #### 2024.05.12
 解决浏览器y轴滚动条占用内容宽度。
 

@@ -88,7 +88,7 @@ public class DataSourceUtils implements ServletContextListener {
      * @return
      */
     private boolean checkUserTable() {
-        String sqlCount = "select u.id from user u";
+        String sqlCount = "select u.id from user u limit 1";
         try (Connection conn = dSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlCount);
              ResultSet rs = ps.executeQuery()) {
